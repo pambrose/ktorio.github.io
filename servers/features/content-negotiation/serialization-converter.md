@@ -24,20 +24,20 @@ To install the feature by registering a JSON content convertor using kotlinx.ser
 
 ```kotlin
 install(ContentNegotiation) {
-    serialization()
+    json()
 }
 ```
 
 ## Configuration
 
-The `serialization()` function has two optional parameters with default arguments:
+The `json()` function has two optional parameters with default arguments:
 * `contentType` provides a way to specify which content types it should handle, `ContentType.Application.Json` by default.
 * `json` provides ability to configure [JSON formatter](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/runtime_usage.md#json), `Json(DefaultJsonConfiguration)` by default.
 
 Advanced example:
 ```kotlin
 install(ContentNegotiation) {
-    serialization(
+    json(
         contentType = ContentType.Application.Json,
         json = Json(
             DefaultJsonConfiguration.copy(
