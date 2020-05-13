@@ -41,8 +41,8 @@ In particular, `get` is an alias to `route(HttpMethod.Get, path) { handle(body) 
 
 Routing is organized in a tree with a recursive matching system that is capable of handling quite complex rules
 for request processing. The Tree is built with nodes and selectors. The Node contains handlers and interceptors, 
-and the selector is attached to an arc which connects another node. If selector matches current routing evaluation context, 
-the algorithm goes down to the node associated with that selector.
+and the selector is attached to an arc that connects another node. If a selector matches the current routing evaluation 
+context, the algorithm goes down to the node associated with that selector.
  
 Routing is built using a DSL in a nested manner:
   
@@ -65,7 +65,7 @@ method(HttpMethod.Get) { // matches GET verb
 }
 ```  
 
-Route resolution algorithms go through nodes recursively discarding subtrees where selector didn't match.
+Route resolution algorithms go through nodes, recursively discarding subtrees where selector didn't match.
 
 Builder functions:
 
@@ -78,11 +78,11 @@ Builder functions:
 
 ## Path
 
-Building routing tree by hand would be very inconvenient. Thus there is `route` function that covers most of the use cases in a 
- simple way, using _path_.
+Building a routing tree by hand would be very inconvenient. Thus, there is the `route` function, which covers most of the 
+use cases in a simple way using _path_.
 
-`route` function (and respective HTTP verb aliases) receives a `path` as a parameter which is processed to build routing
-tree. First, it is split into path segments by the `'/'` delimiter. Each segment generates a nested routing node.
+The `route` function (and respective HTTP verb aliases) receives a `path` as a parameter, which is processed to build 
+a routing tree. First, it is split into path segments by the `'/'` delimiter. Each segment generates a nested routing node.
 
 These two variants are equivalent:
 
@@ -95,7 +95,7 @@ route("/foo") {
 ```
 
 #### Parameters
-Path can also contain _parameters_ that match specific path segment and capture its value into `parameters` properties
+A path can also contain _parameters_ that match specific path segment and capture its value into the `parameters` properties
 of an application call:
 
 ```kotlin
@@ -104,8 +104,8 @@ get("/user/{login}") {
 }
 ```
 
-When user agent requests `/user/john` using GET method, this route is matched and `parameters` property
-will have `"login"` key with value `"john"`.
+When a user agent requests `/user/john` using the GET method, this route is matched and the `parameters` property
+will have a `"login"` key with the value `"john"`.
 
 #### Optional, Wildcard, Tailcard
 
