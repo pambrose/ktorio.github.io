@@ -83,21 +83,23 @@ explicitly or the TCP socket is closed. So even with a `while (true)` loop, this
 a leak.
 {: .note}
 
-### Usage as a Channel
+### Usage as a Flow
 {: #channel}
 
-Since the `incoming` property is a ReceiveChannel, you can use it with its stream-like interface:
+Since the `incoming` property is a ReceiveChannel, you can use it as a flow:
 
 ```kotlin
 routing {
     webSocket("/") { // websocketSession
-        for (frame in incoming.mapNotNull { it as? Frame.Text }) {
-            val text = frame.readText()
-            outgoing.send(Frame.Text("YOU SAID $text"))
-            if (text.equals("bye", ignoreCase = true)) {
-                close(CloseReason(CloseReason.Codes.NORMAL, "Client said BYE"))
-            }
-        }
+        incoming.receiveAsFlow()     
+            .mapNotNull { it as? Frame.Text }
+            .collect { frame ->
+                val text = frame.readText()
+                outgoing.send(Frame.Text("YOU SAID $text"))
+                if (text.equals("bye", ignoreCase = true)) {
+                    close(CloseReason(CloseReason.Codes.NORMAL, "Client said BYE"))
+                }
+             }
     }
 }
 ``` 
